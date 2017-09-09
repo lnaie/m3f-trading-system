@@ -1,0 +1,10 @@
+﻿{
+  "gdax_config_path" : "./example_gdax_config.json",
+
+  "instrument" : "ETH-USD",
+  "order_size" : 1,
+  "buy_offset" : 1.00,
+  "sell_offset": 1.00,
+  "reload_buy_seconds": 60,
+  "new_order_delay_seconds": 5
+}

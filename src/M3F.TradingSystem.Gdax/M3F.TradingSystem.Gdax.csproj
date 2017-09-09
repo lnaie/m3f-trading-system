@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\M3F.TradingSystem\M3F.TradingSystem.csproj">
+      <Project>{0411b6bb-b7b9-43f6-97de-87b34f09de7f}</Project>
+      <Name>M3F.TradingSystem</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
