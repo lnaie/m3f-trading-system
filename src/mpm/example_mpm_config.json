@@ -1,5 +1,5 @@
 ﻿{
-  "gdax_config_path" : "./example_gdax_config.json",
+  "gdax_config_path" : "./mpm/example_gdax_config.json",
 
   "instrument" : "ETH-USD",
   "order_size" : 1,
