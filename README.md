@@ -31,6 +31,16 @@ should aid in writing trading bots.
   which uses GDAX backend in conjunction with the actor system
   to implement a simple _buy low, sell high_ bot.
   
+## Getting started
+
+1. Download [.NET Core for your platform](https://www.microsoft.com/net/download/core)
+   (I've been using Ubuntu 16.04).
+
+2. Clone this git repository and go to its `src` directory.
+3. Modify the [configuration](/src/mpm/example_gdax_config.json) [files](src/mpm/example_mpm_config.json)
+   and adjust paths as necessary.
+4. Execute `dotnet restore`
+5. Execute `dotnet run --project mpm/mpm.csproj mpm/example_mpm_config.json` to run the example bot.
 
 ## Contributing
 
