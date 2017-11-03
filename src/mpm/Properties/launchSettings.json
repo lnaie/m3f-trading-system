@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "mpm": {
+      "commandName": "Project",
+      "commandLineArgs": "example_mpm_config.json"
+    }
+  }
+}

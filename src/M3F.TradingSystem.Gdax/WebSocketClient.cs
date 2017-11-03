@@ -1,6 +1,7 @@
 ﻿/**
  * Copyright (c) 2017-present, Filip Frącz
  * Copyright (c) 2017-present, M3F Innovations, LLC
+ * Copyright (c) 2017-present, lucian.naie@outlook.com
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -27,7 +28,7 @@ namespace M3F.TradingSystem.Gdax
         public JObject Message { get; }
     }
 
-    public class WebSocketClient
+    public class WebSocketClient: IWebSocketClient
     {
         readonly HashSet<Instrument> _subscribedInstruments;
         readonly EventWaitHandle _waitHandle;
@@ -42,7 +43,6 @@ namespace M3F.TradingSystem.Gdax
             _subscribedInstruments = new HashSet<Instrument>();
             _waitHandle = new AutoResetEvent(false);
             _endpoint = endpoint;
-            _socket = new ClientWebSocket();
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
         }
@@ -132,6 +132,11 @@ namespace M3F.TradingSystem.Gdax
             {
                 _receiveThread?.Join();
                 _receiveThread = null;
+            }
+            if (_socket != null)
+            {
+                _socket.Dispose();
+                _socket = null;
             }
         }
 

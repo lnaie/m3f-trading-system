@@ -1,10 +1,20 @@
 ﻿{
-  "gdax_config_path" : "./mpm/example_gdax_config.json",
-
-  "instrument" : "ETH-USD",
-  "order_size" : 1,
-  "buy_offset" : 1.00,
-  "sell_offset": 1.00,
-  "reload_buy_seconds": 60,
-  "new_order_delay_seconds": 5
+    "gdax": {
+        "enabled": true,
+        "config_path": "example_gdax_config.json",
+        "markets": {
+            "ETH-USD": {
+                "strategies": {
+                    "blsh": {
+                        "name": "Buy low sell high",
+                        "order_size": 1,
+                        "buy_offset": 1.00,
+                        "sell_offset": 1.00,
+                        "reload_buy_seconds": 60,
+                        "new_order_delay_seconds": 5
+                    }
+                }
+            }
+        }
+    }
 }

@@ -2,6 +2,6 @@
     "gdax_api_uri": "https://api.gdax.com",
     "gdax_ws_uri": "wss://ws-feed.gdax.com",
     "gdax_api_key": "your_gdax_api_key",
-    "gdax_api_secret": "your_gdax_api_secret",
+    "gdax_api_secret": "eW91cl9nZGF4X2FwaV9zZWNyZXQ=",
     "gdax_api_passphrase": "your_gdax_api_passphrase"
 }
