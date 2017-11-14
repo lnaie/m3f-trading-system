@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>mpm</AssemblyName>
     <RootNamespace>M3F.TradingSystem.Mpm</RootNamespace>
   </PropertyGroup>
@@ -10,9 +10,9 @@
     <ProjectReference Include="..\M3F.TradingSystem\M3F.TradingSystem.csproj" />
     <ProjectReference Include="..\M3F.TradingSystem.Gdax\M3F.TradingSystem.Gdax.csproj" />
     <ProjectReference Include="..\M3F.TradingSystem.Actors\M3F.TradingSystem.Actors.csproj" />
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include="Akka" Version="1.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Akka" Version="1.3.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="NLog" Version="5.0.0-beta09" />
   </ItemGroup>
 </Project>
