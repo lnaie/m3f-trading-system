@@ -13,12 +13,12 @@ using M3F.TradingSystem.Gdax;
 
 namespace M3F.TradingSystem.Mpm
 {
-    public class LiveTickerFactory : ITickerFactory
+    public class LiveOrderBookTickerFactory : ITickerFactory
     {
         readonly RestClient _client;
         readonly WebSocketClient _webSocketClient;
 
-        public LiveTickerFactory (RestClient client, WebSocketClient webSocketClient)
+        public LiveOrderBookTickerFactory (RestClient client, WebSocketClient webSocketClient)
         {
             _client = client;
             _webSocketClient = webSocketClient;

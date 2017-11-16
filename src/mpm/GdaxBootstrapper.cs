@@ -91,7 +91,7 @@ namespace M3F.TradingSystem.Mpm
 
                     var orderManager = new Gdax.RestOrderManager(restClient, wsClient);
                     var ticker = system.ActorOf(Props.Create(
-                        () => new Ticker(new LiveTickerFactory(restClient, wsClient))),
+                        () => new TickerActor(new LiveOrderBookTickerFactory(restClient, wsClient))),
                         $"gdax-{instrument}-ticker");
                     var reporter = system.ActorOf(Props.Create(
                         () => new InsideMarketReporterActor(
@@ -110,7 +110,7 @@ namespace M3F.TradingSystem.Mpm
                         var strategyName = strategyValue["name"]?.ToString() ?? strategyKey;
 
                         var blshStrategy = system.ActorOf(Props.Create(
-                            () => new BuyLowSellHigh(
+                            () => new BuyLowSellHighActor(
                                 ticker,
                                 orderManager,
                                 instrument,
@@ -122,7 +122,7 @@ namespace M3F.TradingSystem.Mpm
                             )),
                             $"gdax-{instrument}-strategy-{strategyKey}");
 
-                        blshStrategy.Tell(new BuyLowSellHigh.Start());
+                        blshStrategy.Tell(new BuyLowSellHighActor.Start());
                         _logger.Log($"GDAX:{instrument}: strategy '{strategyName}' started.");
                     }
 

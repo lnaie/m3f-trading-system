@@ -15,7 +15,7 @@ using Newtonsoft.Json.Linq;
 
 namespace M3F.TradingSystem.Gdax
 {
-    public static class GdaxRestClientExtentions
+    public static class RestClientExtentions
     {
         static async Task<JObject>
             GetBook (RestClient client, string product, int level)

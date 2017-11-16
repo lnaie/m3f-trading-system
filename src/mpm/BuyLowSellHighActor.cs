@@ -15,7 +15,7 @@ using M3F.TradingSystem.Actors;
 
 namespace M3F.TradingSystem.Mpm
 {
-    public class BuyLowSellHigh : ReceiveActor
+    public class BuyLowSellHighActor : ReceiveActor
     {
         readonly Akka.Event.ILoggingAdapter _log = Akka.Event.Logging.GetLogger(Context);
 
@@ -43,7 +43,7 @@ namespace M3F.TradingSystem.Mpm
 
         public class BuyTimerElapsed { }
 
-        public BuyLowSellHigh (IActorRef ticker,
+        public BuyLowSellHighActor (IActorRef ticker,
                                IOrderManager orderManager,
                                Instrument instrument,
                                decimal size,
@@ -61,7 +61,7 @@ namespace M3F.TradingSystem.Mpm
             _reloadBuySeconds = reloadBuySeconds;
             _placeNewOrderDelaySeconds = placeNewOrderDelaySeconds;
 
-            ticker.Tell(new Ticker.Subscribe(_instrument));
+            ticker.Tell(new TickerActor.Subscribe(_instrument));
 
             Become(StateNotInMarket);
         }
@@ -70,12 +70,12 @@ namespace M3F.TradingSystem.Mpm
         {
             ReceiveAsync<Start>(async r =>
                            {
-                               _buyOrder = spawnChild(() => new ExchangeOrder(_orderManager,
+                               _buyOrder = spawnChild(() => new ExchangeOrderActor(_orderManager,
                                                                               ExchangeOrderType.Limit,
                                                                               _instrument,
                                                                               Side.Buy));
 
-                               _sellOrder = spawnChild(() => new ExchangeOrder(_orderManager,
+                               _sellOrder = spawnChild(() => new ExchangeOrderActor(_orderManager,
                                                                                ExchangeOrderType.Limit,
                                                                                _instrument,
                                                                                Side.Sell));
@@ -108,7 +108,7 @@ namespace M3F.TradingSystem.Mpm
 
             _previousBuyPrice = buyPrice;
             _log.Info("Placing buy order of {0} @ {1}", _orderSize, buyPrice);
-            _buyOrder.Tell(new ExchangeOrder.ChangeRequest(buyPrice,
+            _buyOrder.Tell(new ExchangeOrderActor.ChangeRequest(buyPrice,
                                                            _orderSize,
                                                            true));
 
@@ -140,7 +140,7 @@ namespace M3F.TradingSystem.Mpm
                                          if (buyPrice > _previousBuyPrice)
                                          {
                                              _log.Info("Cancelling buy order, as the market has moved up ({0})", _insideMarket.Value.Ask.Price);
-                                             _buyOrder.Tell(new ExchangeOrder.CancelRequest());
+                                             _buyOrder.Tell(new ExchangeOrderActor.CancelRequest());
                                          }
                                          else
                                          {
@@ -152,7 +152,7 @@ namespace M3F.TradingSystem.Mpm
                                          }
                                      });
 
-            ReceiveAsync<ExchangeOrder.Filled>(async filled =>
+            ReceiveAsync<ExchangeOrderActor.Filled>(async filled =>
                                           {
                                                _log.Info("Bought {0} @ {1}", filled.FilledSize, filled.Price);
 
@@ -164,14 +164,14 @@ namespace M3F.TradingSystem.Mpm
                                                   await DelayNewOrderPlacement();
 
                                                   _log.Info("Placing sell of {0} @ {1}", _orderSize, targetPrice);
-                                                  _sellOrder.Tell(new ExchangeOrder.ChangeRequest(targetPrice,
+                                                  _sellOrder.Tell(new ExchangeOrderActor.ChangeRequest(targetPrice,
                                                                                                   _orderSize,
                                                                                                   true));
                                                   Become(StateWaitingForSellToFill);
                                               }
                                           });
 
-            Receive<ExchangeOrder.Cancelled>(c =>
+            Receive<ExchangeOrderActor.Cancelled>(c =>
                                              {
                                                  _log.Info("Buy cancelled");
                                                  Reload(immediate: false);
@@ -186,7 +186,7 @@ namespace M3F.TradingSystem.Mpm
 
         void StateWaitingForSellToFill ()
         {
-            Receive<ExchangeOrder.Filled>(filled =>
+            Receive<ExchangeOrderActor.Filled>(filled =>
                                           {
                                               _profitAndLoss += filled.FilledSize * (filled.Price - _previousBuyPrice);
                                               _log.Info("Sold {0} at {1}. Realized P&L: {2}", filled.FilledSize, filled.Price, _profitAndLoss);
@@ -197,7 +197,7 @@ namespace M3F.TradingSystem.Mpm
                                               }
                                           });
 
-            Receive<ExchangeOrder.Cancelled>(c =>
+            Receive<ExchangeOrderActor.Cancelled>(c =>
                                              {
                                                  _log.Info("Sell cancelled");
                                                  Reload();

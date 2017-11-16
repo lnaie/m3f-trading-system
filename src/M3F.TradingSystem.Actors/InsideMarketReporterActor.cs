@@ -25,7 +25,7 @@ namespace M3F.TradingSystem.Actors
             _instrument = instrument;
             _logLevel = logLevel;
             _ticker = ticker;
-            _ticker.Tell(new Ticker.Subscribe(instrument));
+            _ticker.Tell(new TickerActor.Subscribe(instrument));
 
             Receive<InsideMarketChangedEventArgs>(e =>
             {                

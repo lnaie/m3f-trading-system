@@ -21,7 +21,7 @@ namespace M3F.TradingSystem.Actors
     /// recognized: <see cref="Debug"/>, <see cref="Info"/>,
     /// <see cref="Warning"/> and <see cref="Error"/>.
     /// </summary>
-    public class NLogLogger : ReceiveActor, IRequiresMessageQueue<ILoggerMessageQueueSemantics>
+    public class NLogLoggerActor : ReceiveActor, IRequiresMessageQueue<ILoggerMessageQueueSemantics>
     {
         const int LogSourceSkip = 17; // LogSource: [akka://mpm/user/gdax-ETH-USD-strategy-blsh#1114027313]
         readonly ILoggingAdapter _log = Context.GetLogger();
@@ -44,9 +44,9 @@ namespace M3F.TradingSystem.Actors
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NLogLogger"/> class.
+        /// Initializes a new instance of the <see cref="NLogLoggerActor"/> class.
         /// </summary>
-        public NLogLogger ()
+        public NLogLoggerActor ()
         {
             Receive<Error>(m => Log(m, 
                 (logger, logSource, module) => LogEvent(logger, NLogLevel.Error, logSource, module, m.Cause, "{0}", m.Message)));

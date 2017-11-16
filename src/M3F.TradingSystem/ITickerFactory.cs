@@ -9,7 +9,7 @@
 
 using System.Threading.Tasks;
 
-namespace M3F.TradingSystem.Actors
+namespace M3F.TradingSystem
 {
     public interface ITickerFactory
     {

@@ -11,7 +11,7 @@ using Akka.Actor;
 
 namespace M3F.TradingSystem.Actors
 {
-    public class ExchangeOrder : ReceiveActor
+    public class ExchangeOrderActor : ReceiveActor
     {
         public Instrument Instrument { get; }
         public Side Side { get; }
@@ -80,7 +80,7 @@ namespace M3F.TradingSystem.Actors
         ExchangeOrderId _exchangeOrderId = null;
         decimal _originalSize = 0m;
 
-        public ExchangeOrder(IOrderManager orderManager,
+        public ExchangeOrderActor(IOrderManager orderManager,
             ExchangeOrderType orderType,
             Instrument instrument,
             Side side)

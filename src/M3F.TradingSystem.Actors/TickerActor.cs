@@ -12,7 +12,7 @@ using Akka.Actor;
 
 namespace M3F.TradingSystem.Actors
 {
-    public class Ticker : ReceiveActor
+    public class TickerActor : ReceiveActor
     {
         readonly ITickerFactory _tickerFactory;
         readonly Dictionary<Instrument, IActorRef> _tickers;
@@ -41,7 +41,7 @@ namespace M3F.TradingSystem.Actors
             }
         }
 
-        public Ticker (ITickerFactory tickerFactory)
+        public TickerActor (ITickerFactory tickerFactory)
         {
             _tickers = new Dictionary<Instrument, IActorRef>();
             _tickerFactory = tickerFactory;
